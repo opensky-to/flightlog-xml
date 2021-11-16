@@ -7,6 +7,7 @@
 namespace OpenSky.FlightLogXML
 {
     using System;
+    using System.Globalization;
     using System.Xml.Linq;
 
     /// -------------------------------------------------------------------------------------------------
@@ -19,6 +20,45 @@ namespace OpenSky.FlightLogXML
     /// -------------------------------------------------------------------------------------------------
     public class TouchDown
     {
+        /// -------------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TouchDown"/> class.
+        /// </summary>
+        /// <remarks>
+        /// sushi.at, 16/11/2021.
+        /// </remarks>
+        /// -------------------------------------------------------------------------------------------------
+        public TouchDown()
+        {
+        }
+
+        /// -------------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TouchDown"/> class.
+        /// </summary>
+        /// <remarks>
+        /// sushi.at, 16/11/2021.
+        /// </remarks>
+        /// <param name="touchdown">
+        /// The touchdown XML element.
+        /// </param>
+        /// -------------------------------------------------------------------------------------------------
+        public TouchDown(XElement touchdown)
+        {
+            this.Timestamp= DateTime.ParseExact(touchdown.EnsureChildElement("Timestamp").Value, "O", CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal);
+            this.Latitude = double.Parse(touchdown.EnsureChildElement("Lat").Value);
+            this.Longitude = double.Parse(touchdown.EnsureChildElement("Lon").Value);
+            this.Altitude = int.Parse(touchdown.EnsureChildElement("Alt").Value);
+            this.LandingRate = double.Parse(touchdown.EnsureChildElement("LandingRate").Value);
+            this.GForce = double.Parse(touchdown.EnsureChildElement("GForce").Value);
+            this.SideSlipAngle = double.Parse(touchdown.EnsureChildElement("SideSlipAngle").Value);
+            this.HeadWind = double.Parse(touchdown.EnsureChildElement("HeadWind").Value);
+            this.CrossWind = double.Parse(touchdown.EnsureChildElement("CrossWind").Value);
+            this.BankAngle = double.Parse(touchdown.EnsureChildElement("BankAngle").Value);
+            this.GroundSpeed = double.Parse(touchdown.EnsureChildElement("GroundSpeed").Value);
+            this.Airspeed = double.Parse(touchdown.EnsureChildElement("Airspeed").Value);
+        }
+
         /// -------------------------------------------------------------------------------------------------
         /// <summary>
         /// Gets or sets the airspeed.

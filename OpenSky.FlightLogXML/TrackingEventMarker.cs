@@ -21,6 +21,39 @@ namespace OpenSky.FlightLogXML
     {
         /// -------------------------------------------------------------------------------------------------
         /// <summary>
+        /// Initializes a new instance of the <see cref="TrackingEventMarker"/> class.
+        /// </summary>
+        /// <remarks>
+        /// sushi.at, 16/11/2021.
+        /// </remarks>
+        /// -------------------------------------------------------------------------------------------------
+        public TrackingEventMarker()
+        {
+        }
+
+        /// -------------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TrackingEventMarker"/> class.
+        /// </summary>
+        /// <remarks>
+        /// sushi.at, 16/11/2021.
+        /// </remarks>
+        /// <param name="marker">
+        /// The marker XML element.
+        /// </param>
+        /// -------------------------------------------------------------------------------------------------
+        public TrackingEventMarker(XElement marker)
+        {
+            this.Latitude = double.Parse(marker.EnsureChildElement("Lat").Value);
+            this.Longitude = double.Parse(marker.EnsureChildElement("Lon").Value);
+            this.Altitude = int.Parse(marker.EnsureChildElement("Alt").Value);
+            this.MarkerSize = int.Parse(marker.EnsureChildElement("Size").Value);
+            this.MarkerColor = Color.FromArgb(int.Parse(marker.EnsureChildElement("Color").Value));
+            this.MarkerTooltip = marker.EnsureChildElement("ToolTip").Value;
+        }
+
+        /// -------------------------------------------------------------------------------------------------
+        /// <summary>
         /// Gets or sets the altitude.
         /// </summary>
         /// -------------------------------------------------------------------------------------------------
@@ -90,8 +123,8 @@ namespace OpenSky.FlightLogXML
             marker.SetAttributeValue("Lat", $"{this.Latitude}");
             marker.SetAttributeValue("Lon", $"{this.Longitude}");
             marker.SetAttributeValue("Alt", $"{this.Altitude}");
-            marker.SetAttributeValue("MarkerSize", $"{this.MarkerSize}");
-            marker.SetAttributeValue("MarkerColor", $"{this.MarkerColor}");
+            marker.SetAttributeValue("Size", $"{this.MarkerSize}");
+            marker.SetAttributeValue("Color", $"{this.MarkerColor.ToArgb()}");
             marker.SetAttributeValue("ToolTip", $"{this.MarkerTooltip}");
             return marker;
         }

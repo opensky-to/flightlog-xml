@@ -6,7 +6,9 @@
 
 namespace OpenSky.FlightLogXML
 {
-    using System.Diagnostics;
+    using System;
+    using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
     using System.Xml.Linq;
 
@@ -29,18 +31,34 @@ namespace OpenSky.FlightLogXML
 
         /// -------------------------------------------------------------------------------------------------
         /// <summary>
-        /// Generates a flight log.
+        /// Initializes a new instance of the <see cref="FlightLog"/> class.
+        /// </summary>
+        /// <remarks>
+        /// sushi.at, 16/11/2021.
+        /// </remarks>
+        /// -------------------------------------------------------------------------------------------------
+        public FlightLog()
+        {
+            this.NavLogWaypoints = new List<Waypoint>();
+            this.PositionReports = new List<PositionReport>();
+            this.TouchDowns = new List<TouchDown>();
+            this.TrackingEventLogEntries = new List<TrackingEventLogEntry>();
+            this.TrackingEventMarkers = new List<TrackingEventMarker>();
+        }
+
+        /// -------------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Generates the flight log XML elements.
         /// </summary>
         /// <remarks>
         /// sushi.at, 16/11/2021.
         /// </remarks>
         /// <returns>
-        /// The flight log.
+        /// The flight log XML root element.
         /// </returns>
         /// -------------------------------------------------------------------------------------------------
         public XElement GenerateFlightLog()
         {
-            Debug.WriteLine("Generating flight log XML file...");
             var log = new XElement("OpenSky.FlightLog");
             log.Add(new XElement("LogVersion", FlightLogFileVersion));
 
@@ -59,7 +77,7 @@ namespace OpenSky.FlightLogXML
             var flightElement = new XElement("Flight");
             log.Add(flightElement);
             flightElement.Add(new XElement("ID", $"{this.FlightID}"));
-            flightElement.Add(new XElement("PlaneRegistry", $"{this.AircraftRegistry}"));
+            flightElement.Add(new XElement("AircraftRegistry", $"{this.AircraftRegistry}"));
             flightElement.Add(new XElement("UtcOffset", $"{this.UtcOffset:F1}"));
 
             flightElement.Add(this.Origin.GetXMLElement("Origin"));
@@ -113,6 +131,69 @@ namespace OpenSky.FlightLogXML
             return log;
         }
 
+        /// -------------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Restore the flight log from XML.
+        /// </summary>
+        /// <remarks>
+        /// sushi.at, 16/11/2021.
+        /// </remarks>
+        /// <param name="log">
+        /// The log root XML element.
+        /// </param>
+        /// -------------------------------------------------------------------------------------------------
+        public void RestoreFlightLog(XElement log)
+        {
+            var logVersion = log.EnsureChildElement("LogVersion").Value;
+            if (logVersion != FlightLogFileVersion)
+            {
+                throw new Exception("This flight log is using an unsupported version number!");
+            }
 
+            // Restore flight log basics
+            this.Agent = log.EnsureChildElement("Agent").Value;
+            this.AgentVersion = log.EnsureChildElement("AgentVersion").Value;
+            this.OpenSkyUser = log.EnsureChildElement("OpenSkyUser").Value;
+            this.LocalTimeZone = double.Parse(log.EnsureChildElement("LocalTimeZone").Value);
+            this.TrackingStarted = DateTime.ParseExact(log.EnsureChildElement("TrackingStarted").Value, "O", CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal);
+            this.TrackingStopped = DateTime.ParseExact(log.EnsureChildElement("TrackingStopped").Value, "O", CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal);
+            this.WasAirborne = bool.Parse(log.EnsureChildElement("WasAirborne").Value);
+            this.TimeSavedBecauseOfSimRate = TimeSpan.Parse(log.EnsureChildElement("WarpTimeSaved").Value);
+            this.TotalPaused = TimeSpan.Parse(log.EnsureChildElement("TotalPaused").Value);
+
+            // Restore flight basics
+            var flight = log.EnsureChildElement("Flight");
+            this.FlightID = Guid.Parse(flight.EnsureChildElement("ID").Value);
+            this.AircraftRegistry = flight.EnsureChildElement("AircraftRegistry").Value;
+            this.UtcOffset = double.Parse(flight.EnsureChildElement("UtcOffset").Value);
+
+            this.Origin = new FlightLogAirport(flight.EnsureChildElement("Origin"));
+            this.Destination = new FlightLogAirport(flight.EnsureChildElement("Destination"));
+            this.Alternate = new FlightLogAirport(flight.EnsureChildElement("Alternate"));
+
+            this.FuelGallons = double.Parse(flight.EnsureChildElement("FuelGallons").Value);
+            this.Payload = flight.EnsureChildElement("Payload").Value;
+            this.PayloadPounds = double.Parse(flight.EnsureChildElement("PayloadPounds").Value);
+
+            // Restore flight events
+            var eventLog = log.EnsureChildElement("EventLog");
+            this.TrackingEventLogEntries.AddRange(eventLog.Elements("LogEntry").Select(e => new TrackingEventLogEntry(e)));
+
+            // Restore tacking map markers
+            var trackingMapMarkers = log.EnsureChildElement("EventMapMarkers");
+            this.TrackingEventMarkers.AddRange(trackingMapMarkers.Elements("Marker").Select(e => new TrackingEventMarker(e)));
+
+            // Restore flight position reports
+            var positionReports = log.EnsureChildElement("PositionReports");
+            this.PositionReports.AddRange(positionReports.Elements("Position").Select(p => new PositionReport(p)));
+
+            // Restore landing report
+            var landingReport = log.EnsureChildElement("LandingReport");
+            this.TouchDowns.AddRange(landingReport.Elements("Touchdown").Select(t => new TouchDown(t)));
+
+            // Restore nav log waypoints
+            var navLogWaypoints = log.EnsureChildElement("NavLogWaypoints");
+            this.NavLogWaypoints.AddRange(navLogWaypoints.Elements("Waypoint").Select(w => new Waypoint(w)));
+        }
     }
 }

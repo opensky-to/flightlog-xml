@@ -20,6 +20,37 @@ namespace OpenSky.FlightLogXML
     {
         /// -------------------------------------------------------------------------------------------------
         /// <summary>
+        /// Initializes a new instance of the <see cref="Waypoint"/> class.
+        /// </summary>
+        /// <remarks>
+        /// sushi.at, 16/11/2021.
+        /// </remarks>
+        /// -------------------------------------------------------------------------------------------------
+        public Waypoint()
+        {
+        }
+
+        /// -------------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Waypoint"/> class.
+        /// </summary>
+        /// <remarks>
+        /// sushi.at, 16/11/2021.
+        /// </remarks>
+        /// <param name="waypoint">
+        /// The waypoint XML element.
+        /// </param>
+        /// -------------------------------------------------------------------------------------------------
+        public Waypoint(XElement waypoint)
+        {
+            this.Latitude = double.Parse(waypoint.EnsureChildElement("Lat").Value);
+            this.Longitude = double.Parse(waypoint.EnsureChildElement("Lon").Value);
+            this.WaypointName = waypoint.EnsureChildElement("Name").Value;
+            this.WaypointType = waypoint.EnsureChildElement("Type").Value;
+        }
+
+        /// -------------------------------------------------------------------------------------------------
+        /// <summary>
         /// Gets or sets the latitude.
         /// </summary>
         /// -------------------------------------------------------------------------------------------------
