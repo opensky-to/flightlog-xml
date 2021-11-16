@@ -20,6 +20,37 @@ namespace OpenSky.FlightLogXML
     {
         /// -------------------------------------------------------------------------------------------------
         /// <summary>
+        /// Initializes a new instance of the <see cref="FlightLogAirport"/> class.
+        /// </summary>
+        /// <remarks>
+        /// sushi.at, 16/11/2021.
+        /// </remarks>
+        /// -------------------------------------------------------------------------------------------------
+        public FlightLogAirport()
+        {
+        }
+
+        /// -------------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FlightLogAirport"/> class.
+        /// </summary>
+        /// <remarks>
+        /// sushi.at, 16/11/2021.
+        /// </remarks>
+        /// <param name="airport">
+        /// The airport XML element.
+        /// </param>
+        /// -------------------------------------------------------------------------------------------------
+        public FlightLogAirport(XElement airport)
+        {
+            this.Icao = airport.EnsureChildElement("ICAO").Value;
+            this.Name = airport.EnsureChildElement("Name").Value;
+            this.Latitude = double.Parse(airport.EnsureChildElement("Lat").Value);
+            this.Longitude = double.Parse(airport.EnsureChildElement("Lon").Value);
+        }
+
+        /// -------------------------------------------------------------------------------------------------
+        /// <summary>
         /// Gets or sets the ICAO code.
         /// </summary>
         /// -------------------------------------------------------------------------------------------------
