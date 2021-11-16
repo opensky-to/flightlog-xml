@@ -21,10 +21,6 @@ jobs:
       run: dotnet build --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
-  publish:
-    runs-on: ubuntu-latest
-    needs: build
-    if: github.ref == 'refs/heads/master'
-    steps:
     - name: PushNuget
       run: dotnet nuget push OpenSky.FlightLogXML/bin/Debug/*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{secrets.PUBLISH_NUGET}} --skip-duplicate
+      
