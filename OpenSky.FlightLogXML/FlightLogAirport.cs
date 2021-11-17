@@ -43,10 +43,10 @@ namespace OpenSky.FlightLogXML
         /// -------------------------------------------------------------------------------------------------
         public FlightLogAirport(XElement airport)
         {
-            this.Icao = airport.EnsureChildElement("ICAO").Value;
-            this.Name = airport.EnsureChildElement("Name").Value;
-            this.Latitude = double.Parse(airport.EnsureChildElement("Lat").Value);
-            this.Longitude = double.Parse(airport.EnsureChildElement("Lon").Value);
+            this.Icao = airport.EnsureAttribute("ICAO").Value;
+            this.Name = airport.EnsureAttribute("Name").Value;
+            this.Latitude = double.Parse(airport.EnsureAttribute("Lat").Value);
+            this.Longitude = double.Parse(airport.EnsureAttribute("Lon").Value);
         }
 
         /// -------------------------------------------------------------------------------------------------

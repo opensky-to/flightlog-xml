@@ -46,13 +46,13 @@ namespace OpenSky.FlightLogXML
         /// -------------------------------------------------------------------------------------------------
         public TrackingEventLogEntry(XElement log)
         {
-            this.EventType = (FlightTrackingEventType)int.Parse(log.EnsureChildElement("Type").Value);
-            this.EventTime= DateTime.ParseExact(log.EnsureChildElement("Time").Value, "O", CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal);
-            this.Latitude = double.Parse(log.EnsureChildElement("Lat").Value);
-            this.Longitude = double.Parse(log.EnsureChildElement("Lon").Value);
-            this.Altitude = int.Parse(log.EnsureChildElement("Alt").Value);
-            this.EventColor = Color.FromArgb(int.Parse(log.EnsureChildElement("Color").Value));
-            this.LogMessage = log.EnsureChildElement("Message").Value;
+            this.EventType = (FlightTrackingEventType)int.Parse(log.EnsureAttribute("Type").Value);
+            this.EventTime= DateTime.ParseExact(log.EnsureAttribute("Time").Value, "O", CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal);
+            this.Latitude = double.Parse(log.EnsureAttribute("Lat").Value);
+            this.Longitude = double.Parse(log.EnsureAttribute("Lon").Value);
+            this.Altitude = int.Parse(log.EnsureAttribute("Alt").Value);
+            this.EventColor = Color.FromArgb(int.Parse(log.EnsureAttribute("Color").Value));
+            this.LogMessage = log.EnsureAttribute("Message").Value;
         }
 
         /// -------------------------------------------------------------------------------------------------

@@ -45,18 +45,18 @@ namespace OpenSky.FlightLogXML
         /// -------------------------------------------------------------------------------------------------
         public TouchDown(XElement touchdown)
         {
-            this.Timestamp= DateTime.ParseExact(touchdown.EnsureChildElement("Timestamp").Value, "O", CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal);
-            this.Latitude = double.Parse(touchdown.EnsureChildElement("Lat").Value);
-            this.Longitude = double.Parse(touchdown.EnsureChildElement("Lon").Value);
-            this.Altitude = int.Parse(touchdown.EnsureChildElement("Alt").Value);
-            this.LandingRate = double.Parse(touchdown.EnsureChildElement("LandingRate").Value);
-            this.GForce = double.Parse(touchdown.EnsureChildElement("GForce").Value);
-            this.SideSlipAngle = double.Parse(touchdown.EnsureChildElement("SideSlipAngle").Value);
-            this.HeadWind = double.Parse(touchdown.EnsureChildElement("HeadWind").Value);
-            this.CrossWind = double.Parse(touchdown.EnsureChildElement("CrossWind").Value);
-            this.BankAngle = double.Parse(touchdown.EnsureChildElement("BankAngle").Value);
-            this.GroundSpeed = double.Parse(touchdown.EnsureChildElement("GroundSpeed").Value);
-            this.Airspeed = double.Parse(touchdown.EnsureChildElement("Airspeed").Value);
+            this.Timestamp= DateTime.ParseExact(touchdown.EnsureAttribute("Timestamp").Value, "O", CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal);
+            this.Latitude = double.Parse(touchdown.EnsureAttribute("Lat").Value);
+            this.Longitude = double.Parse(touchdown.EnsureAttribute("Lon").Value);
+            this.Altitude = int.Parse(touchdown.EnsureAttribute("Alt").Value);
+            this.LandingRate = double.Parse(touchdown.EnsureAttribute("LandingRate").Value);
+            this.GForce = double.Parse(touchdown.EnsureAttribute("GForce").Value);
+            this.SideSlipAngle = double.Parse(touchdown.EnsureAttribute("SideSlipAngle").Value);
+            this.HeadWind = double.Parse(touchdown.EnsureAttribute("HeadWind").Value);
+            this.CrossWind = double.Parse(touchdown.EnsureAttribute("CrossWind").Value);
+            this.BankAngle = double.Parse(touchdown.EnsureAttribute("BankAngle").Value);
+            this.GroundSpeed = double.Parse(touchdown.EnsureAttribute("GroundSpeed").Value);
+            this.Airspeed = double.Parse(touchdown.EnsureAttribute("Airspeed").Value);
         }
 
         /// -------------------------------------------------------------------------------------------------

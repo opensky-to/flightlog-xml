@@ -45,18 +45,18 @@ namespace OpenSky.FlightLogXML
         /// -------------------------------------------------------------------------------------------------
         public PositionReport(XElement position)
         {
-            this.Timestamp= DateTime.ParseExact(position.EnsureChildElement("Timestamp").Value, "O", CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal);
-            this.Latitude = double.Parse(position.EnsureChildElement("Lat").Value);
-            this.Longitude = double.Parse(position.EnsureChildElement("Lon").Value);
-            this.Altitude = int.Parse(position.EnsureChildElement("Alt").Value);
-            this.Airspeed = double.Parse(position.EnsureChildElement("AS").Value);
-            this.Groundspeed = double.Parse(position.EnsureChildElement("GS").Value);
-            this.OnGround = bool.Parse(position.EnsureChildElement("Ground").Value);
-            this.RadioAlt = double.Parse(position.EnsureChildElement("RadAlt").Value);
-            this.Heading = double.Parse(position.EnsureChildElement("Hdg").Value);
-            this.FuelOnBoard = double.Parse(position.EnsureChildElement("Fuel").Value);
-            this.SimulationRate = double.Parse(position.EnsureChildElement("SimR").Value);
-            this.TimeOfDay = (TimeOfDay)int.Parse(position.EnsureChildElement("TOD").Value);
+            this.Timestamp= DateTime.ParseExact(position.EnsureAttribute("Timestamp").Value, "O", CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal);
+            this.Latitude = double.Parse(position.EnsureAttribute("Lat").Value);
+            this.Longitude = double.Parse(position.EnsureAttribute("Lon").Value);
+            this.Altitude = int.Parse(position.EnsureAttribute("Alt").Value);
+            this.Airspeed = double.Parse(position.EnsureAttribute("AS").Value);
+            this.Groundspeed = double.Parse(position.EnsureAttribute("GS").Value);
+            this.OnGround = bool.Parse(position.EnsureAttribute("Ground").Value);
+            this.RadioAlt = double.Parse(position.EnsureAttribute("RadAlt").Value);
+            this.Heading = double.Parse(position.EnsureAttribute("Hdg").Value);
+            this.FuelOnBoard = double.Parse(position.EnsureAttribute("Fuel").Value);
+            this.SimulationRate = double.Parse(position.EnsureAttribute("SimR").Value);
+            this.TimeOfDay = (TimeOfDay)int.Parse(position.EnsureAttribute("TOD").Value);
         }
 
         /// -------------------------------------------------------------------------------------------------

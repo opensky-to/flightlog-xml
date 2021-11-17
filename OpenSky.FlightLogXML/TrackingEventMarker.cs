@@ -44,12 +44,12 @@ namespace OpenSky.FlightLogXML
         /// -------------------------------------------------------------------------------------------------
         public TrackingEventMarker(XElement marker)
         {
-            this.Latitude = double.Parse(marker.EnsureChildElement("Lat").Value);
-            this.Longitude = double.Parse(marker.EnsureChildElement("Lon").Value);
-            this.Altitude = int.Parse(marker.EnsureChildElement("Alt").Value);
-            this.MarkerSize = int.Parse(marker.EnsureChildElement("Size").Value);
-            this.MarkerColor = Color.FromArgb(int.Parse(marker.EnsureChildElement("Color").Value));
-            this.MarkerTooltip = marker.EnsureChildElement("ToolTip").Value;
+            this.Latitude = double.Parse(marker.EnsureAttribute("Lat").Value);
+            this.Longitude = double.Parse(marker.EnsureAttribute("Lon").Value);
+            this.Altitude = int.Parse(marker.EnsureAttribute("Alt").Value);
+            this.MarkerSize = int.Parse(marker.EnsureAttribute("Size").Value);
+            this.MarkerColor = Color.FromArgb(int.Parse(marker.EnsureAttribute("Color").Value));
+            this.MarkerTooltip = marker.EnsureAttribute("ToolTip").Value;
         }
 
         /// -------------------------------------------------------------------------------------------------
