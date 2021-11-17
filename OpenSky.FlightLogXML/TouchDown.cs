@@ -37,6 +37,69 @@ namespace OpenSky.FlightLogXML
         /// Initializes a new instance of the <see cref="TouchDown"/> class.
         /// </summary>
         /// <remarks>
+        /// sushi.at, 17/11/2021.
+        /// </remarks>
+        /// <param name="timestamp">
+        /// The timestamp of the landing.
+        /// </param>
+        /// <param name="latitude">
+        /// Gets or sets the latitude.
+        /// </param>
+        /// <param name="longitude">
+        /// Gets or sets the longitude.
+        /// </param>
+        /// <param name="altitude">
+        /// Gets or sets the altitude.
+        /// </param>
+        /// <param name="landingRate">
+        /// The landing rate.
+        /// </param>
+        /// <param name="gForce">
+        /// The G-force.
+        /// </param>
+        /// <param name="forwardSpeed">
+        /// The forward speed.
+        /// </param>
+        /// <param name="sidewardsSpeed">
+        /// The sidewards speed.
+        /// </param>
+        /// <param name="headWind">
+        /// The head wind.
+        /// </param>
+        /// <param name="crossWind">
+        /// The cross wind.
+        /// </param>
+        /// <param name="bankAngle">
+        /// The bank angle.
+        /// </param>
+        /// <param name="groundSpeed">
+        /// The ground speed.
+        /// </param>
+        /// <param name="airspeed">
+        /// The airspeed.
+        /// </param>
+        /// -------------------------------------------------------------------------------------------------
+        public TouchDown(DateTime timestamp, double latitude, double longitude, int altitude, double landingRate, double gForce, double forwardSpeed, double sidewardsSpeed, double headWind, double crossWind, double bankAngle, double groundSpeed, double airspeed)
+        {
+            this.Timestamp = timestamp;
+            this.Latitude = latitude;
+            this.Longitude = longitude;
+            this.Altitude = altitude;
+            this.LandingRate = landingRate;
+            this.GForce = gForce;
+            this.SideSlipAngle = Math.Atan(sidewardsSpeed / forwardSpeed) * 180.0 / Math.PI;
+            this.HeadWind = headWind;
+            this.CrossWind = crossWind;
+            this.BankAngle = bankAngle;
+            this.GroundSpeed = groundSpeed;
+            this.Airspeed = airspeed;
+        }
+
+        /// -------------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TouchDown"/> class.
+        /// </summary>
+        /// <remarks>
         /// sushi.at, 16/11/2021.
         /// </remarks>
         /// <param name="touchdown">
