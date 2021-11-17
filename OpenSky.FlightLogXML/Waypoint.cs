@@ -43,10 +43,10 @@ namespace OpenSky.FlightLogXML
         /// -------------------------------------------------------------------------------------------------
         public Waypoint(XElement waypoint)
         {
-            this.Latitude = double.Parse(waypoint.EnsureChildElement("Lat").Value);
-            this.Longitude = double.Parse(waypoint.EnsureChildElement("Lon").Value);
-            this.WaypointName = waypoint.EnsureChildElement("Name").Value;
-            this.WaypointType = waypoint.EnsureChildElement("Type").Value;
+            this.Latitude = double.Parse(waypoint.EnsureAttribute("Lat").Value);
+            this.Longitude = double.Parse(waypoint.EnsureAttribute("Lon").Value);
+            this.WaypointName = waypoint.EnsureAttribute("Name").Value;
+            this.WaypointType = waypoint.EnsureAttribute("Type").Value;
         }
 
         /// -------------------------------------------------------------------------------------------------

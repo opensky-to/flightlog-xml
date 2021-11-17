@@ -44,6 +44,10 @@ namespace OpenSky.FlightLogXML
             this.TouchDowns = new List<TouchDown>();
             this.TrackingEventLogEntries = new List<TrackingEventLogEntry>();
             this.TrackingEventMarkers = new List<TrackingEventMarker>();
+
+            this.Origin = new FlightLogAirport();
+            this.Destination = new FlightLogAirport();
+            this.Alternate = new FlightLogAirport();
         }
 
         /// -------------------------------------------------------------------------------------------------
@@ -117,7 +121,7 @@ namespace OpenSky.FlightLogXML
             log.Add(landingReport);
             foreach (var touchDown in this.TouchDowns)
             {
-                landingReport.Add(touchDown);
+                landingReport.Add(touchDown.GetXMLElement());
             }
 
             // Add nav log waypoints
@@ -125,7 +129,7 @@ namespace OpenSky.FlightLogXML
             log.Add(navLogWaypoints);
             foreach (var waypoint in this.NavLogWaypoints)
             {
-                navLogWaypoints.Add(waypoint);
+                navLogWaypoints.Add(waypoint.GetXMLElement());
             }
 
             return log;
