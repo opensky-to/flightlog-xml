@@ -24,12 +24,6 @@ namespace OpenSky.FlightLogXML.Tests
     [TestClass]
     public class FlightLogTests
     {
-        private const string EmptyLog =
-            "<OpenSky.FlightLog>\r\n  <LogVersion>1.0</LogVersion>\r\n  <Agent />\r\n  <AgentVersion />\r\n  <OpenSkyUser />\r\n  <LocalTimeZone>0</LocalTimeZone>\r\n  <TrackingStarted>0001-01-01T00:00:00.0000000</TrackingStarted>\r\n  <TrackingStopped>0001-01-01T00:00:00.0000000</TrackingStopped>\r\n  <WasAirborne>false</WasAirborne>\r\n  <WarpTimeSaved>00:00:00</WarpTimeSaved>\r\n  <TotalPaused>00:00:00</TotalPaused>\r\n  <Flight>\r\n    <ID>00000000-0000-0000-0000-000000000000</ID>\r\n    <AircraftRegistry></AircraftRegistry>\r\n    <UtcOffset>0.0</UtcOffset>\r\n    <Origin ICAO=\"\" Name=\"\" Lat=\"0\" Lon=\"0\" />\r\n    <Destination ICAO=\"\" Name=\"\" Lat=\"0\" Lon=\"0\" />\r\n    <Alternate ICAO=\"\" Name=\"\" Lat=\"0\" Lon=\"0\" />\r\n    <FuelGallons>0.00</FuelGallons>\r\n    <Payload />\r\n    <PayloadPounds>0.00</PayloadPounds>\r\n  </Flight>\r\n  <EventLog />\r\n  <EventMapMarkers />\r\n  <PositionReports />\r\n  <LandingReport />\r\n  <NavLogWaypoints />\r\n</OpenSky.FlightLog>";
-
-        private const string DemoLog =
-            "<OpenSky.FlightLog>\r\n  <LogVersion>1.0</LogVersion>\r\n  <Agent>OpenSky.AgentMSFS</Agent>\r\n  <AgentVersion>1.0.0</AgentVersion>\r\n  <OpenSkyUser>sushi.at</OpenSkyUser>\r\n  <LocalTimeZone>0</LocalTimeZone>\r\n  <TrackingStarted>2021-11-16T23:00:00.0000000Z</TrackingStarted>\r\n  <TrackingStopped>2021-11-16T23:30:00.0000000Z</TrackingStopped>\r\n  <WasAirborne>true</WasAirborne>\r\n  <WarpTimeSaved>00:05:00</WarpTimeSaved>\r\n  <TotalPaused>00:00:30</TotalPaused>\r\n  <Flight>\r\n    <ID>12345678-9012-3456-7890-123456789012</ID>\r\n    <AircraftRegistry>OE-FIX</AircraftRegistry>\r\n    <UtcOffset>3.5</UtcOffset>\r\n    <Origin ICAO=\"LOWW\" Name=\"Schwechat\" Lat=\"48.110279083252\" Lon=\"16.5697212219238\" />\r\n    <Destination ICAO=\"LOWS\" Name=\"Salzburg\" Lat=\"47.7944450378418\" Lon=\"13.0033330917358\" />\r\n    <Alternate ICAO=\"EDDM\" Name=\"Munich\" Lat=\"48.3537826538086\" Lon=\"11.7860860824585\" />\r\n    <FuelGallons>1509.01</FuelGallons>\r\n    <Payload>Test Crash Dummies</Payload>\r\n    <PayloadPounds>5000.00</PayloadPounds>\r\n  </Flight>\r\n  <EventLog>\r\n    <LogEntry Type=\"20\" Time=\"2021-11-16T23:05:00.0000000Z\" Lat=\"48.1225693354019\" Lon=\"16.5341279584542\" Alt=\"648\" Color=\"-16744320\" Message=\"Airborne\" />\r\n  </EventLog>\r\n  <EventMapMarkers>\r\n    <Marker Lat=\"48.0573668507386\" Lon=\"14.3947947598309\" Alt=\"23177\" Size=\"8\" Color=\"-16744320\" ToolTip=\"Altitude: 23176 ft (AGL: 21961 ft, OnGround: False)&#xD;&#xA;TAS: 401 kts, GS: 408 kts&#xD;&#xA;Heading: 26&#xD;&#xA;Fuel on board: 2357.0 gallons&#xD;&#xA;Simulation rate: 1.0&#xD;&#xA;Time of day: Day&#xD;&#xA;&#xD;&#xA;15.11.2021 12:27:13: Position report\" />\r\n  </EventMapMarkers>\r\n  <PositionReports>\r\n    <Position Timestamp=\"2021-11-16T23:10:00.0000000Z\" Lat=\"48.0497967653612\" Lon=\"15.1616691515661\" Alt=\"30222\" AS=\"446\" GS=\"445\" Ground=\"False\" RadAlt=\"29072\" Hdg=\"265\" Fuel=\"2357.31\" SimR=\"1.0\" TOD=\"1\" />\r\n  </PositionReports>\r\n  <LandingReport>\r\n    <Touchdown Timestamp=\"2021-11-16T23:27:00.0000000Z\" Lat=\"47.798559091916\" Lon=\"13.0007162672299\" Alt=\"1422\" LandingRate=\"-111\" GForce=\"1.30\" SideSlipAngle=\"-0.93\" HeadWind=\"1.99\" CrossWind=\"-2.28\" BankAngle=\"-2.28\" GroundSpeed=\"124\" Airspeed=\"122\" />\r\n  </LandingReport>\r\n  <NavLogWaypoints>\r\n    <Waypoint Lat=\"48.057819\" Lon=\"14.289717\" Name=\"BAGSI\" Type=\"wpt\" />\r\n  </NavLogWaypoints>\r\n</OpenSky.FlightLog>";
-
         /// -------------------------------------------------------------------------------------------------
         /// <summary>
         /// Test the save and restore methods.
@@ -45,7 +39,7 @@ namespace OpenSky.FlightLogXML.Tests
 
             var xml = $"{flightLog.GenerateFlightLog()}";
             Debug.WriteLine(xml);
-            Assert.AreEqual(xml, EmptyLog);
+            Assert.AreEqual(string.IsNullOrEmpty(xml), false);
 
             flightLog.Agent = "OpenSky.AgentMSFS";
             flightLog.AgentVersion = "1.0.0";
@@ -152,7 +146,7 @@ namespace OpenSky.FlightLogXML.Tests
 
             xml = $"{flightLog.GenerateFlightLog()}";
             Debug.WriteLine(xml);
-            Assert.AreEqual(xml, DemoLog);
+            Assert.AreEqual(string.IsNullOrEmpty(xml), false);
 
             var newFlightLog = new FlightLog();
             newFlightLog.RestoreFlightLog(XElement.Parse(xml));
