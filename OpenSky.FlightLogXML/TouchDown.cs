@@ -243,7 +243,7 @@ namespace OpenSky.FlightLogXML
             touchdown.SetAttributeValue("SideSlipAngle", $"{this.SideSlipAngle:F2}");
             touchdown.SetAttributeValue("HeadWind", $"{this.HeadWind:F2}");
             touchdown.SetAttributeValue("CrossWind", $"{this.CrossWind:F2}");
-            touchdown.SetAttributeValue("BankAngle", $"{this.CrossWind:F2}");
+            touchdown.SetAttributeValue("BankAngle", $"{this.BankAngle:F2}");
             touchdown.SetAttributeValue("GroundSpeed", $"{this.GroundSpeed:F0}");
             touchdown.SetAttributeValue("Airspeed", $"{this.Airspeed:F0}");
             return touchdown;

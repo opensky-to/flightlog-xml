@@ -131,7 +131,7 @@ namespace OpenSky.FlightLogXML.Tests
                 SideSlipAngle = -0.93,
                 HeadWind = 1.99,
                 CrossWind = -2.28,
-                BankAngle = -2.28,
+                BankAngle = -1.28,
                 GroundSpeed = 124,
                 Airspeed = 122
             });
