@@ -184,6 +184,19 @@ namespace OpenSky.FlightLogXML.Tests
             Assert.AreEqual(newFlightLog.Payload, flightLog.Payload);
             Assert.AreEqual(newFlightLog.PayloadPounds, flightLog.PayloadPounds);
 
+            Assert.AreEqual(newFlightLog.PositionReports[0].Timestamp, flightLog.PositionReports[0].Timestamp);
+            Assert.AreEqual(newFlightLog.PositionReports[0].Latitude, flightLog.PositionReports[0].Latitude);
+            Assert.AreEqual(newFlightLog.PositionReports[0].Longitude, flightLog.PositionReports[0].Longitude);
+            Assert.AreEqual(newFlightLog.PositionReports[0].Altitude, flightLog.PositionReports[0].Altitude);
+            Assert.AreEqual(newFlightLog.PositionReports[0].Airspeed, flightLog.PositionReports[0].Airspeed);
+            Assert.AreEqual(newFlightLog.PositionReports[0].Groundspeed, flightLog.PositionReports[0].Groundspeed);
+            Assert.AreEqual(newFlightLog.PositionReports[0].OnGround, flightLog.PositionReports[0].OnGround);
+            Assert.AreEqual(newFlightLog.PositionReports[0].RadioAlt, flightLog.PositionReports[0].RadioAlt);
+            Assert.AreEqual(newFlightLog.PositionReports[0].Heading, flightLog.PositionReports[0].Heading);
+            Assert.AreEqual(newFlightLog.PositionReports[0].FuelOnBoard, flightLog.PositionReports[0].FuelOnBoard);
+            Assert.AreEqual(newFlightLog.PositionReports[0].SimulationRate, flightLog.PositionReports[0].SimulationRate);
+            Assert.AreEqual(newFlightLog.PositionReports[0].TimeOfDay, flightLog.PositionReports[0].TimeOfDay);
+
             Assert.AreEqual(newFlightLog.TrackingEventLogEntries[0].EventType, flightLog.TrackingEventLogEntries[0].EventType);
             Assert.AreEqual(newFlightLog.TrackingEventLogEntries[0].EventTime, flightLog.TrackingEventLogEntries[0].EventTime);
             Assert.AreEqual(newFlightLog.TrackingEventLogEntries[0].Latitude, flightLog.TrackingEventLogEntries[0].Latitude);
