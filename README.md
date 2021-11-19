@@ -10,7 +10,7 @@ OpenSky is an open-source airline management simulation currently in development
 
 ## OpenSky FlightLog XML
 
-This repository contains the C# code for creating and parsing OpenSky XML flight logs, published as a nuget package.
+This repository contains the C# code for creating and parsing OpenSky XML flight logs, published as a [nuget package](https://www.nuget.org/packages/OpenSky.FlightLogXML/).
 
 ## License
 
