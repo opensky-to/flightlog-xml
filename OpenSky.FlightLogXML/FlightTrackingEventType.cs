@@ -82,6 +82,11 @@ namespace OpenSky.FlightLogXML
         Crashed = 22,
 
         /// <summary>
+        /// Speed limit 250 knots below 10k feet violated.
+        /// </summary>
+        SpeedLimit250Below10K = 23,
+
+        /// <summary>
         /// Beacon ON/OFF.
         /// </summary>
         Beacon = 30,
