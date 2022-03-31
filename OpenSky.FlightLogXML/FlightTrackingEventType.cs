@@ -67,6 +67,11 @@ namespace OpenSky.FlightLogXML
         SkippedHalfGroundHandling = 12,
 
         /// <summary>
+        /// Time in simulator was changed while tracking.
+        /// </summary>
+        TimeInSimChanged = 13,
+
+        /// <summary>
         /// Airborne.
         /// </summary>
         Airborne = 20,
