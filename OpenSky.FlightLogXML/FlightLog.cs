@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="Class1.cs" company="OpenSky">
-// OpenSky project 2021
+// OpenSky project 2021-2023
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -27,7 +27,14 @@ namespace OpenSky.FlightLogXML
         /// The flight log file version.
         /// </summary>
         /// -------------------------------------------------------------------------------------------------
-        private const string FlightLogFileVersion = "1.0";
+        private const string FlightLogFileVersion = "1.1";
+
+        /// -------------------------------------------------------------------------------------------------
+        /// <summary>
+        /// The compatible file versions.
+        /// </summary>
+        /// -------------------------------------------------------------------------------------------------
+        private string[] compatibleFileVersions = { "1.0", "1.1" };
 
         /// -------------------------------------------------------------------------------------------------
         /// <summary>
@@ -76,6 +83,7 @@ namespace OpenSky.FlightLogXML
             log.Add(new XElement("WasAirborne", this.WasAirborne));
             log.Add(new XElement("WarpTimeSaved", $"{this.TimeSavedBecauseOfSimRate:c}"));
             log.Add(new XElement("TotalPaused", $"{this.TotalPaused:c}"));
+            log.Add(new XElement("OnlineTime", $"{this.TimeConenctedToOnlineNetwork:c}"));
 
             // Add flight basics
             var flightElement = new XElement("Flight");
@@ -149,10 +157,12 @@ namespace OpenSky.FlightLogXML
         public void RestoreFlightLog(XElement log)
         {
             var logVersion = log.EnsureChildElement("LogVersion").Value;
-            if (logVersion != FlightLogFileVersion)
+            if (!this.compatibleFileVersions.Contains(logVersion))
             {
                 throw new Exception("This flight log is using an unsupported version number!");
             }
+
+            var logVersionDouble = double.Parse(logVersion);
 
             // Restore flight log basics
             this.Agent = log.EnsureChildElement("Agent").Value;
@@ -164,6 +174,10 @@ namespace OpenSky.FlightLogXML
             this.WasAirborne = bool.Parse(log.EnsureChildElement("WasAirborne").Value);
             this.TimeSavedBecauseOfSimRate = TimeSpan.Parse(log.EnsureChildElement("WarpTimeSaved").Value);
             this.TotalPaused = TimeSpan.Parse(log.EnsureChildElement("TotalPaused").Value);
+            if (logVersionDouble >= 1.1)
+            {
+                this.TimeConenctedToOnlineNetwork = TimeSpan.Parse(log.EnsureChildElement("OnlineTime").Value);
+            }
 
             // Restore flight basics
             var flight = log.EnsureChildElement("Flight");

@@ -1,6 +1,6 @@
 // --------------------------------------------------------------------------------------------------------------------
 // <copyright file="FlightLogTests.cs" company="OpenSky">
-// OpenSky project 2021
+// OpenSky project 2021-2023
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -50,6 +50,7 @@ namespace OpenSky.FlightLogXML.Tests
             flightLog.WasAirborne = true;
             flightLog.TimeSavedBecauseOfSimRate = TimeSpan.FromMinutes(5);
             flightLog.TotalPaused = TimeSpan.FromSeconds(30);
+            flightLog.TimeConenctedToOnlineNetwork = TimeSpan.FromMinutes(28.5);
 
             flightLog.FlightID = Guid.Parse("12345678-9012-3456-7890-123456789012");
             flightLog.AircraftRegistry = "OE-FIX";
@@ -160,6 +161,7 @@ namespace OpenSky.FlightLogXML.Tests
             Assert.AreEqual(newFlightLog.WasAirborne, flightLog.WasAirborne);
             Assert.AreEqual(newFlightLog.TimeSavedBecauseOfSimRate, flightLog.TimeSavedBecauseOfSimRate);
             Assert.AreEqual(newFlightLog.TotalPaused, flightLog.TotalPaused);
+            Assert.AreEqual(newFlightLog.TimeConenctedToOnlineNetwork, flightLog.TimeConenctedToOnlineNetwork);
 
             Assert.AreEqual(newFlightLog.FlightID, flightLog.FlightID);
             Assert.AreEqual(newFlightLog.AircraftRegistry, flightLog.AircraftRegistry);
