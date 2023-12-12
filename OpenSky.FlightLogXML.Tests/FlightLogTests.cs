@@ -137,6 +137,8 @@ namespace OpenSky.FlightLogXML.Tests
                 Airspeed = 122
             });
 
+            flightLog.FinalTouchDownIndex = 1;
+
             flightLog.NavLogWaypoints.Add(new Waypoint
             {
                 Latitude = 48.057819,
@@ -226,6 +228,7 @@ namespace OpenSky.FlightLogXML.Tests
             Assert.AreEqual(newFlightLog.TouchDowns[0].BankAngle, flightLog.TouchDowns[0].BankAngle);
             Assert.AreEqual(newFlightLog.TouchDowns[0].GroundSpeed, flightLog.TouchDowns[0].GroundSpeed);
             Assert.AreEqual(newFlightLog.TouchDowns[0].Airspeed, flightLog.TouchDowns[0].Airspeed);
+            Assert.AreEqual(newFlightLog.FinalTouchDownIndex, flightLog.FinalTouchDownIndex);
 
             Assert.AreEqual(newFlightLog.NavLogWaypoints[0].Latitude, flightLog.NavLogWaypoints[0].Latitude);
             Assert.AreEqual(newFlightLog.NavLogWaypoints[0].Longitude, flightLog.NavLogWaypoints[0].Longitude);
