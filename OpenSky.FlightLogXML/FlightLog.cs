@@ -27,14 +27,14 @@ namespace OpenSky.FlightLogXML
         /// The flight log file version.
         /// </summary>
         /// -------------------------------------------------------------------------------------------------
-        private const string FlightLogFileVersion = "1.1";
+        private const string FlightLogFileVersion = "1.2";
 
         /// -------------------------------------------------------------------------------------------------
         /// <summary>
         /// The compatible file versions.
         /// </summary>
         /// -------------------------------------------------------------------------------------------------
-        private string[] compatibleFileVersions = { "1.0", "1.1" };
+        private readonly string[] compatibleFileVersions = { "1.0", "1.1", "1.2" };
 
         /// -------------------------------------------------------------------------------------------------
         /// <summary>
@@ -126,6 +126,7 @@ namespace OpenSky.FlightLogXML
 
             // Add landing report
             var landingReport = new XElement("LandingReport");
+            landingReport.SetAttributeValue("FinalTouchDownIndex", this.FinalTouchDownIndex);
             log.Add(landingReport);
             foreach (var touchDown in this.TouchDowns)
             {
@@ -208,6 +209,14 @@ namespace OpenSky.FlightLogXML
             // Restore landing report
             var landingReport = log.EnsureChildElement("LandingReport");
             this.TouchDowns.AddRange(landingReport.Elements("Touchdown").Select(t => new TouchDown(t)));
+            if (logVersionDouble >= 1.2)
+            {
+                var finalToruchIndex = landingReport.Attribute("FinalTouchDownIndex");
+                if (finalToruchIndex != null && int.TryParse(finalToruchIndex.Value, out var finalIndex))
+                {
+                    this.FinalTouchDownIndex = finalIndex;
+                }
+            }
 
             // Restore nav log waypoints
             var navLogWaypoints = log.EnsureChildElement("NavLogWaypoints");
